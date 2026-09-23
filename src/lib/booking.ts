@@ -1,0 +1,3 @@
+import { z } from 'zod';
+export const bookingSchema=z.object({name:z.string().trim().min(2,'Nama minimal 2 karakter').max(100),phone:z.string().trim().regex(/^\+?[0-9][0-9\s-]{8,18}$/,'Nomor telepon tidak valid'),service:z.enum(['antar-barang','bersih-bersih','listrik','cctv']),quantity:z.number().int().min(1).max(100),address:z.string().trim().min(10,'Alamat minimal 10 karakter').max(500),date:z.iso.date(),time:z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/,'Waktu tidak valid'),details:z.string().trim().min(10,'Jelaskan kebutuhan minimal 10 karakter').max(1500),website:z.string().max(0).optional().default('')});
+export type BookingInput=z.infer<typeof bookingSchema>;

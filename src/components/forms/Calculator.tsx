@@ -1,0 +1,5 @@
+'use client';
+import { useState } from 'react';
+import Link from 'next/link';
+import { estimate,getService,rupiah, type ServiceSlug } from '@/config/services';
+export function Calculator({slug}:{slug:ServiceSlug}){const service=getService(slug)!;const [quantity,setQuantity]=useState(1);return <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm"><h2 className="text-xl font-bold">Simulasi biaya</h2><label htmlFor="quantity" className="mt-6 block font-medium">{service.unitLabel}</label><input id="quantity" type="number" min={service.min} max={service.max} value={quantity} onChange={e=>setQuantity(Math.min(service.max,Math.max(service.min,Number(e.target.value)||1)))} className="mt-2 w-full rounded-lg border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-teal-500"/><p className="mt-6 text-sm text-slate-600">Perkiraan biaya jasa</p><p aria-live="polite" className="mt-1 text-3xl font-bold text-brand">{rupiah(estimate(slug,quantity))}</p><Link href={`/pesan?layanan=${slug}&jumlah=${quantity}`} className="mt-6 block rounded-lg bg-brand px-5 py-3 text-center font-semibold text-white hover:bg-brand-hover">Pesan layanan ini</Link></div>}

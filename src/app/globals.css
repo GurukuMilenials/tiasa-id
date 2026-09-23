@@ -1,0 +1,5 @@
+@import "tailwindcss";
+@theme { --color-brand:#0F766E; --color-brand-hover:#0D9488; --color-brand-soft:#CCFBF1; --color-ink:#0F172A; --color-amber:#F59E0B; --font-sans:Arial,Helvetica,sans-serif; }
+:root { color-scheme:light; }
+body { background:#F8FAFC; color:#0F172A; }
+input,select,textarea { background:white; }

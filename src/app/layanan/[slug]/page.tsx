@@ -1,0 +1,7 @@
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import { getService,services,rupiah } from '@/config/services';
+import { Calculator } from '@/components/forms/Calculator';
+export function generateStaticParams(){return services.map(s=>({slug:s.slug}));}
+export async function generateMetadata({params}:{params:Promise<{slug:string}>}){const {slug}=await params;const s=getService(slug);return {title:s?.name??'Layanan',description:s?.description};}
+export default async function ServiceDetail({params}:{params:Promise<{slug:string}>}){const {slug}=await params;const s=getService(slug);if(!s)notFound();return <main className="mx-auto max-w-5xl px-5 py-12"><Link href="/layanan" className="text-sm font-semibold text-brand">← Semua layanan</Link><div className="mt-8 grid gap-10 md:grid-cols-[1.2fr_.8fr]"><div><s.icon className="text-brand" size={42}/><h1 className="mt-5 text-4xl font-bold">{s.name}</h1><p className="mt-4 text-lg text-slate-600">{s.description}</p><h2 className="mt-10 text-xl font-semibold">Cakupan pekerjaan</h2><p className="mt-3 text-slate-600">{s.scope}</p><ul className="mt-6 list-inside list-disc space-y-2 text-slate-600">{s.details.map(item=><li key={item}>{item}</li>)}</ul></div><div><Calculator slug={s.slug}/><p className="mt-4 text-sm text-slate-600">Acuan dasar {rupiah(s.base)} ditambah {rupiah(s.step)} per {s.unit}. Biaya material, kondisi lapangan, dan kebutuhan khusus dapat memengaruhi harga akhir.</p></div></div></main>}
